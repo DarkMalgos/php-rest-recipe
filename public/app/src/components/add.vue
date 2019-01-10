@@ -2,7 +2,7 @@
     <section>
         <form action="" enctype="multipart/form-data" @submit.prevent="addRecipe">
             <label for="title">Titre</label>
-            <input type="text" id="title" name="title" v-model="recipe.title">
+            <input type="text" id="title" name="title" v-model="recipe">
             <div v-for="ingredient in ingredients">
                 <p>{{ ingredient.name }} : {{ ingredient.quantity }}</p>
             </div>
@@ -35,11 +35,7 @@
         name: "add",
         data() {
             return {
-                recipe: {
-                    title: '',
-                    nb: 1,
-                    picture: '',
-                },
+                recipe: '',
                 ing: '',
                 quant: '',
                 ingredients: [],
@@ -51,11 +47,12 @@
         methods: {
             addRecipe() {
                 this.$http.post('http://localhost:8080/recipes', {
-                    recipe: this.recipe.title,
+                    recipe: this.recipe,
                     ingredients: this.ingredients,
                     steps: this.steps
                 }).then(response => {
-                    this.$router.push(`/recipe/${response.data}`);
+                    console.log(response);
+                    //this.$router.push(`/recipe/${response.data}`);
                 }).catch(e => {
                     console.error(e)
                 })

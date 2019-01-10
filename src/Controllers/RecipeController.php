@@ -125,7 +125,7 @@ class RecipeController
     public function post($request, $response, $args)
     {
         $body = $request->getParsedBody();
-
+        echo $body;
         if (!isset($body['recipe']) || !isset($body['ingredients']) || !isset($body['steps'])) {
             return $response->withStatus(404);
         }
@@ -144,6 +144,7 @@ class RecipeController
         }
 
         foreach ($body['steps'] as $key => $value) {
+            $key += 1;
             $this->add_step($value, $key, $response, $id_recipe);
         }
 
